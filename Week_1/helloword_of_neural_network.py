@@ -1,9 +1,11 @@
-import tensorflow
-import tensorflow.keras as keras
+import tensorflow as tf
+from tensorflow import keras # bad: import tensorflow.keras as keras 
 import numpy as np
 
-model = keras.Sequential([keras.layers.Dense(units=1, input_shape=[1])])
-model.compile(optimizer='sgd', loss='mean_squared_error')
+print(tf.__version__)
+
+model = keras.Sequential([keras.layers.Dense(units=1, input_shape=[1])]) # define
+model.compile(optimizer='sgd', loss='mean_squared_error') # compile
 
 xs = np.array([-1, 0 , 1, 2, 3, 4], dtype=float)
 ys = np.array([-3, -1 , 1, 3, 5, 7], dtype=float)
