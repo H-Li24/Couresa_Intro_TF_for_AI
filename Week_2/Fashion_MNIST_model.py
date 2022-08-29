@@ -4,12 +4,19 @@ from tensorflow import keras
 import numpy as np
 
 ##### Exercise 8
-threshold = 0.85
+threshold_acc = 0.85
+threshold_loss = 0.4
 
-class myCallback(tf.keras.callbacks.Callback):
+class myCallback_acc(tf.keras.callbacks.Callback):
     def on_epoch_end(self, epoch, logs={}):
-        if(logs.get('accuracy') >= threshold): # class var in python can receive global var. Interesting.
-            print(f"\nReached {threshold*100}% accuracy so cancelling training!") # \n , but not /n
+        if(logs.get('accuracy') >= threshold_acc): # class var in python can receive global var. Interesting.
+            print(f"\nReached {threshold_acc*100}% accuracy so cancelling training!") # \n , but not /n
+            self.model.stop_training = True
+
+class myCallback_stop(tf.keras.callbacks.Callback):
+    def on_epoch_end(self, epoch, logs={}):
+        if(logs.get('loss') < threshold_loss): # class var in python can receive global var. Interesting.
+            print(f"\nReached {threshold_loss} loss so cancelling training!") # \n , but not /n
             self.model.stop_training = True
 
 fmnist = keras.datasets.fashion_mnist # data object
@@ -43,7 +50,7 @@ model.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=
 # model.fit(train_images, train_labels, epochs=3)
 # model.fit(train_images, train_labels, epochs=30) ##### Exercise 6
 
-callbacks=myCallback()
+callbacks=myCallback_stop()
 model.fit(train_images, train_labels, epochs=3, callbacks=[callbacks]) ##### Exercise 8: early stop
 
 model.evaluate(test_images, test_labels)
