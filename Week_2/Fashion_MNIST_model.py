@@ -50,7 +50,7 @@ model.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=
 # model.fit(train_images, train_labels, epochs=3)
 # model.fit(train_images, train_labels, epochs=30) ##### Exercise 6
 
-callbacks=myCallback_stop() # ERROR: TypeError: set_model() missing 1 required positional argument: 'model' SOLUTION: remember to add ()
+callbacks=myCallback_stop() # ERROR: TypeError: set_model() missing 1 required positional argument: 'model' SOLUTION:remember to add ()
 model.fit(train_images, train_labels, epochs=3, callbacks=[callbacks]) ##### Exercise 8: early stop
 
 model.evaluate(test_images, test_labels)
