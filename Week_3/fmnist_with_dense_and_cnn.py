@@ -49,14 +49,16 @@ class myCallback_acc(tf.keras.callbacks.Callback):
     def on_epoch_end(self, epoch, logs={}):
         if(logs.get('accuracy') >= threshold_acc):
             print(f"\nReached {threshold_acc * 100}% loss so cancelling training!")
+            self.model.stop_training = True
 
-class myCallback_acc(tf.keras.callbacks.Callback):
+class myCallback_loss(tf.keras.callbacks.Callback):
     def on_epoch_end(self, epoch, logs={}):
-        if(logs.get('accuracy') < threshold_loss):
+        if(logs.get('loss') < threshold_loss):
             print(f"\nReached {threshold_loss} loss so cancelling training!")
+            self.model.stop_training = True
 
 
-callbacks=myCallback_acc()
+callbacks=myCallback_loss()
  
 # Train the model
 print(f'\nMODEL TRAINING:')
